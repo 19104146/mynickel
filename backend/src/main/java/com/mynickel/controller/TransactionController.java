@@ -2,6 +2,7 @@ package com.mynickel.controller;
 
 import com.mynickel.model.Transaction;
 import com.mynickel.service.TransactionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,17 +17,17 @@ public class TransactionController {
     }
 
     @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction){
+    public Transaction createTransaction(@RequestBody Transaction transaction) {
         return transactionService.createTransaction(transaction);
     }
 
     @GetMapping
-    public List<Transaction> getAllTransactions(){
+    public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @GetMapping("/{id}")
-    public Transaction getTransactionById(@PathVariable Long id){
+    public Transaction getTransactionById(@PathVariable Long id) {
         return transactionService.getTransactionById(id);
     }
 
@@ -38,5 +39,16 @@ public class TransactionController {
     @DeleteMapping("/{id}")
     public void deleteTransaction(@PathVariable Long id) {
         transactionService.deleteTransaction(id);
+    }
+
+    @PutMapping("/{id}")
+    public Transaction updateRecurringTransaction(@PathVariable Long id, @RequestBody Transaction transactionDetails) {
+        return transactionService.updateRecurringTransaction(id, transactionDetails);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRecurringTransaction(@PathVariable Long id) {
+        transactionService.deleteRecurringTransaction(id);
+        return ResponseEntity.ok().build();
     }
 }
