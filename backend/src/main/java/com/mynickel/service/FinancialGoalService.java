@@ -5,9 +5,11 @@ import com.mynickel.repository.FinancialGoalRepository;
 
 public class FinancialGoalService {
     private final FinancialGoalRepository financialGoalRepository;
+    private final FinancialGoalReportService reportService;
 
-    public FinancialGoalService(FinancialGoalRepository financialGoalRepository) {
+    public FinancialGoalService(FinancialGoalRepository financialGoalRepository, FinancialGoalReportService reportService) {
         this.financialGoalRepository = financialGoalRepository;
+        this.reportService = reportService;
     }
 
     public FinancialGoal createGoal(FinancialGoal financialGoal) {
@@ -28,5 +30,12 @@ public class FinancialGoalService {
 
     public void deleteGoal(Long id) {
         financialGoalRepository.deleteById(id);
+    }
+    public FinancialGoalReportService.GoalProgressReport generateGoalProgressReport() {
+        return reportService.generateGoalProgressReport();
+    }
+
+    public FinancialGoalReportService.GoalDetailReport generateGoalDetailReport(Long id) {
+        return reportService.generateGoalDetailReport(id);
     }
 }

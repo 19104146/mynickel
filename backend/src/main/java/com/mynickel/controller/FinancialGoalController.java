@@ -1,6 +1,7 @@
 package com.mynickel.controller;
 
 import com.mynickel.model.FinancialGoal;
+import com.mynickel.service.FinancialGoalReportService;
 import com.mynickel.service.FinancialGoalService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,15 @@ public class FinancialGoalController {
     @DeleteMapping("/{id}")
     public void deleteGoal(@PathVariable Long id) {
         financialGoalService.deleteGoal(id);
+    }
+
+    @GetMapping("/report")
+    public FinancialGoalReportService.GoalProgressReport getOverallGoalReport() {
+        return financialGoalService.generateGoalProgressReport();
+    }
+
+    @GetMapping("/{id}/detail-report")
+    public FinancialGoalReportService.GoalDetailReport getGoalDetailReport(@PathVariable Long id) {
+        return financialGoalService.generateGoalDetailReport(id);
     }
 }
